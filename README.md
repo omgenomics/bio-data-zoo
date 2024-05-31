@@ -9,3 +9,5 @@
 Prerequisites to develop on this repo:
 
 * `samtools`
+* `bedtools`
+* `seqtk`

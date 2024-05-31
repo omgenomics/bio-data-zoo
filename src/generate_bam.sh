@@ -7,21 +7,21 @@ source "$DIR_SRC/lib.sh" || exit
 # Good BAM files
 # ==============================================================================
 
-URL="https://42basepairs.com/download/s3/1000genomes/phase3/data/NA12878/alignment/NA12878.chrom11.ILLUMINA.bwa.CEU.low_coverage.20121211.bam"
+URL="https://42basepairs.com/download/r2/genomics-data/alignments_NA12878.bam"
 DIR_OUT=$DIR_SRC/../data/bam/good
 mkdir -p "$DIR_OUT"
 
 # ------------------------------------------------------------------------------
-# Basic BAM file
+# Basic
 # ------------------------------------------------------------------------------
 
 log "Creating valid BAM file"
-samtools view -b -h "$URL" 11:82365011-82366010 > "$DIR_OUT/basic.bam"
-validate "$(samtools quickcheck -vvv "$DIR_OUT/basic.bam" 2>&1 | grep "good EOF block")"
 DIR_BASIC="$DIR_OUT/basic.bam"
+samtools view -b -h "$URL" 11:82365011-82366010 > "$DIR_BASIC"
+validate "$(samtools quickcheck -vvv "$DIR_BASIC" 2>&1 | grep "good EOF block")"
 
 # ------------------------------------------------------------------------------
-# Unsorted BAM file
+# Unsorted
 # ------------------------------------------------------------------------------
 
 log "Creating unsorted BAM file"
@@ -29,7 +29,7 @@ samtools view -b -h "$URL" 11:128989445-128990444 11:82365011-82366010 > "$DIR_O
 validate "$(samtools index "$DIR_OUT/unsorted.bam" 2>&1 | grep "Unsorted positions on sequence")"
 
 # ------------------------------------------------------------------------------
-# No mapped data in BAM
+# No mapping information
 # ------------------------------------------------------------------------------
 
 log "Creating BAM with no mapped reads"
@@ -45,7 +45,7 @@ DIR_OUT=$DIR_SRC/../data/bam/bad
 mkdir -p "$DIR_OUT"
 
 # ------------------------------------------------------------------------------
-# Truncated BAM file
+# Truncated
 # ------------------------------------------------------------------------------
 
 log "Creating truncated BAM file"

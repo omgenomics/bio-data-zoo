@@ -7,21 +7,23 @@ source "$DIR_SRC/lib.sh" || exit
 # Good BED files
 # ==============================================================================
 
-URL="https://42basepairs.com/download/s3/human-pangenomics/pangenomes/freeze/freeze1/minigraph/hprc-v1.0-minigraph-chm13.bb.bed.gz"
+URL="https://42basepairs.com/download/r2/genomics-data/regions_CHM13.bed.gz"
 DIR_OUT=$DIR_SRC/../data/bed/good
+DIR_OUT_GZ="$DIR_SRC/../data/bed.gz"
 mkdir -p "$DIR_OUT"
+rm -r "$DIR_OUT_GZ"
 
 # ------------------------------------------------------------------------------
-# Basic BED file
+# Basic
 # ------------------------------------------------------------------------------
 
 log "Creating valid BED file"
-curl -s "$URL" | zcat | head -n 10 > "$DIR_OUT/basic.bed"
-validate "ok"
 DIR_BASIC="$DIR_OUT/basic.bed"
+curl -s "$URL" | zcat | head -n 10 > "$DIR_BASIC"
+validate "ok"
 
 # ------------------------------------------------------------------------------
-# Unsorted BED file
+# Unsorted intervals
 # ------------------------------------------------------------------------------
 
 log "Creating unsorted BED file"
@@ -38,7 +40,7 @@ DIR_OUT=$DIR_SRC/../data/bed/bad
 mkdir -p "$DIR_OUT"
 
 # ------------------------------------------------------------------------------
-# BED file with spaces instead of tabs
+# Spaces instead of tabs
 # ------------------------------------------------------------------------------
 
 log "Creating BED file using spaces instead of tabs"
@@ -46,7 +48,7 @@ sed 's/\t/    /g' "$DIR_BASIC" > "$DIR_OUT/spaces.bed"
 validate "$(bedtools merge -i "$DIR_OUT/spaces.bed" 2>&1 | grep "unable to open file or unable to determine types")"
 
 # ------------------------------------------------------------------------------
-# BED file with invalid ranges
+# Invalid ranges
 # ------------------------------------------------------------------------------
 
 log "Creating BED file with negative coordinates"
@@ -60,3 +62,12 @@ validate "$(bedtools merge -i "$DIR_OUT/start_greater_than_end_coords.bed" 2>&1 
 log "Creating BED file with non-integer coordinates"
 sed 's/3634/3.63/' "$DIR_BASIC" > "$DIR_OUT/non_integer_coords.bed"
 validate "$(bedtools merge -i "$DIR_OUT/non_integer_coords.bed" 2>&1 | grep "unable to open file or unable to determine types")"
+
+
+# ==============================================================================
+# Gzipped BED
+# ==============================================================================
+
+mkdir -p "$DIR_OUT_GZ"
+cp -R "$DIR_SRC/../data/bed/" "$DIR_OUT_GZ"
+gzip -r "$DIR_OUT_GZ"
