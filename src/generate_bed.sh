@@ -11,7 +11,6 @@ URL="https://42basepairs.com/download/r2/genomics-data/regions_CHM13.bed.gz"
 DIR_OUT=$DIR_SRC/../data/bed/good
 DIR_OUT_GZ="$DIR_SRC/../data/bed.gz"
 mkdir -p "$DIR_OUT"
-rm -r "$DIR_OUT_GZ"
 
 # ------------------------------------------------------------------------------
 # Basic
@@ -65,9 +64,9 @@ validate "$(bedtools merge -i "$DIR_OUT/non_integer_coords.bed" 2>&1 | grep "una
 
 
 # ==============================================================================
-# Gzipped BED
+# Gzipped BED (use bgzip because gzip adds timestamp to the header, which would make it look different to git every time)
 # ==============================================================================
 
 mkdir -p "$DIR_OUT_GZ"
-cp -R "$DIR_SRC/../data/bed/" "$DIR_OUT_GZ"
-gzip -r "$DIR_OUT_GZ"
+cp -f -R "$DIR_SRC/../data/bed/" "$DIR_OUT_GZ"
+find "$DIR_OUT_GZ" -type f ! -name "*.gz" -exec bgzip -f {} \;
