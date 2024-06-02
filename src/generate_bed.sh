@@ -9,7 +9,6 @@ source "$DIR_SRC/lib.sh" || exit
 
 URL="https://42basepairs.com/download/r2/genomics-data/regions_CHM13.bed.gz"
 DIR_OUT=$DIR_SRC/../data/bed/good
-DIR_OUT_GZ="$DIR_SRC/../data/bed.gz"
 mkdir -p "$DIR_OUT"
 
 # ------------------------------------------------------------------------------
@@ -29,6 +28,27 @@ log "Creating unsorted BED file"
 curl -s "$URL" | zcat | head -n 50 | tail -n 10 > "$DIR_OUT/unsorted.bed"
 cat "$DIR_BASIC" >> "$DIR_OUT/unsorted.bed"
 validate "$(diff "$DIR_OUT/unsorted.bed" <(bedtools sort -i "$DIR_OUT/unsorted.bed"))"
+
+# ------------------------------------------------------------------------------
+# Compressed
+# ------------------------------------------------------------------------------
+# Note that tabix requires bgzip compression. Also, using `gzip` adds a timestamp
+# to the header, which makes it look different to git every time the script runs.
+# ------------------------------------------------------------------------------
+
+log "Creating compressed BED file (bgzip)"
+cp "$DIR_BASIC" "$DIR_OUT/compressed.bed"
+bgzip -f "$DIR_OUT/compressed.bed"
+validate "ok"
+
+log "Creating indexed BED.bgz file (TBI, CSI)"
+cp "$DIR_BASIC" "$DIR_OUT/indexed_tbi.bed"
+cp "$DIR_BASIC" "$DIR_OUT/indexed_csi.bed"
+bgzip -f "$DIR_OUT/indexed_tbi.bed"
+bgzip -f "$DIR_OUT/indexed_csi.bed"
+tabix -p bed "$DIR_OUT/indexed_tbi.bed.gz"
+tabix -p bed --csi "$DIR_OUT/indexed_csi.bed.gz"
+validate "ok"
 
 
 # ==============================================================================
@@ -61,12 +81,3 @@ validate "$(bedtools merge -i "$DIR_OUT/start_greater_than_end_coords.bed" 2>&1 
 log "Creating BED file with non-integer coordinates"
 sed 's/3634/3.63/' "$DIR_BASIC" > "$DIR_OUT/non_integer_coords.bed"
 validate "$(bedtools merge -i "$DIR_OUT/non_integer_coords.bed" 2>&1 | grep "unable to open file or unable to determine types")"
-
-
-# ==============================================================================
-# Gzipped BED (use bgzip because gzip adds timestamp to the header, which would make it look different to git every time)
-# ==============================================================================
-
-mkdir -p "$DIR_OUT_GZ"
-cp -f -R "$DIR_SRC/../data/bed/" "$DIR_OUT_GZ"
-find "$DIR_OUT_GZ" -type f ! -name "*.gz" -exec bgzip -f {} \;

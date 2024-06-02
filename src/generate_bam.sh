@@ -21,6 +21,17 @@ samtools view -b -h "$URL" 11:82365011-82366010 > "$DIR_BASIC"
 validate "$(samtools quickcheck -vvv "$DIR_BASIC" 2>&1 | grep "good EOF block")"
 
 # ------------------------------------------------------------------------------
+# Indexed
+# ------------------------------------------------------------------------------
+
+log "Creating indexed BAM files (BAI, CSI)"
+cp "$DIR_BASIC" "$DIR_OUT/indexed_bai.bam"
+cp "$DIR_BASIC" "$DIR_OUT/indexed_csi.bam"
+samtools index --bai "$DIR_OUT/indexed_bai.bam"
+samtools index --csi "$DIR_OUT/indexed_csi.bam"
+validate "ok"
+
+# ------------------------------------------------------------------------------
 # Unsorted
 # ------------------------------------------------------------------------------
 

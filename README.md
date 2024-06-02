@@ -12,3 +12,4 @@ Prerequisites to develop on this repo:
 * `bedtools`
 * `seqtk`
 * `bgzip`
+* `tabix`
