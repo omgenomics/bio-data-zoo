@@ -1,4 +1,6 @@
-# genomics-data
+# Bio Data Zoo
+
+This repo contains example data in various genomics file formats. It is intended for bioinformatics tool developers to make testing software easier. It includes examples of valid file formats, edge cases, and invalid formats.
 
 ## Browse
 
