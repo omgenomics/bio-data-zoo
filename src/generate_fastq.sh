@@ -24,6 +24,15 @@ curl -s "$URL_R1" | seqtk seq -l 0 | head -n 12 > "$DIR_BASIC"
 validate "ok"
 
 # ------------------------------------------------------------------------------
+# Compressed
+# ------------------------------------------------------------------------------
+
+log "Creating compressed FASTQ file"
+cp "$DIR_BASIC" "$DIR_OUT/compressed.fastq"
+bgzip -f "$DIR_OUT/compressed.fastq"
+validate "ok"
+
+# ------------------------------------------------------------------------------
 # Quality line starts with "@", which can trip up FASTQ parsers
 # ------------------------------------------------------------------------------
 
@@ -32,7 +41,8 @@ sed '4s/./@/' "$DIR_BASIC" > "$DIR_OUT/quality_@.fastq"
 validate "$(diff <(echo 3) <(grep -c "^@" "$DIR_OUT/quality_@.fastq"))"
 
 # ------------------------------------------------------------------------------
-# Sequence/quality on multiple lines, which breaks parsers that assume 4 lines per read
+# Sequence/quality on multiple lines, which breaks parsers that assume 4 lines per read.
+# This is quite rare but is technically a valid FASTQ file.
 # ------------------------------------------------------------------------------
 
 log "Creating FASTQ split across multiple lines"
