@@ -21,6 +21,26 @@ samtools view -b -h "$URL" 11:82365011-82366010 > "$DIR_BASIC"
 validate "$(samtools quickcheck -vvv "$DIR_BASIC" 2>&1 | grep "good EOF block")"
 
 # ------------------------------------------------------------------------------
+# SAM files
+# ------------------------------------------------------------------------------
+
+log "Creating valid SAM file"
+samtools view -h "$DIR_BASIC" > "$DIR_OUT/basic.sam"
+validate "ok"
+
+log "Creating compressed SAM files (bgzip)"
+cp "$DIR_OUT/basic.sam" "$DIR_OUT/compressed.sam"
+bgzip -f "$DIR_OUT/compressed.sam"
+validate "ok"
+
+log "Creating indexed SAM files (CSI, TBI)"
+cp "$DIR_OUT/compressed.sam.gz" "$DIR_OUT/indexed_csi.sam.gz"
+cp "$DIR_OUT/compressed.sam.gz" "$DIR_OUT/indexed_tbi.sam.gz"
+tabix --csi -p sam "$DIR_OUT/indexed_csi.sam.gz"
+tabix -p sam "$DIR_OUT/indexed_tbi.sam.gz"
+validate "ok"
+
+# ------------------------------------------------------------------------------
 # Indexed
 # ------------------------------------------------------------------------------
 
