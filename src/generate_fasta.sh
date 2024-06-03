@@ -42,6 +42,19 @@ EOF
 validate "ok"
 
 # ------------------------------------------------------------------------------
+# Basic (aligned)
+# ------------------------------------------------------------------------------
+
+log "Creating aligned FASTA file (- for gaps)"
+cat > "$DIR_OUT/aligned.fa" <<EOF
+>sequence1
+ATCTACGATCGAGCTACT
+>sequence2
+ATC----ATCGACCCACT
+EOF
+validate "ok"
+
+# ------------------------------------------------------------------------------
 # Compressed. Use bgzip because gzip adds timestamp in file, which makes git show
 # diffs each time this script runs.
 # ------------------------------------------------------------------------------

@@ -1,5 +1,9 @@
 #!/bin/bash
 
-./src/generate_fastq.sh && \
-    ./src/generate_bam.sh && \
-    ./src/generate_bed.sh
+for script in src/generate_*.sh; do
+    echo "----------------------------------"
+    echo "Running $script..."
+    echo "----------------------------------"
+    bash "$script"
+    echo
+done
