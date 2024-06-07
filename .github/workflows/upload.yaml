@@ -1,11 +1,11 @@
-name: uploadToS3
+name: Upload data to bucket
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
-  deploy:
+  Upload:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -18,3 +18,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
+        AWS_EC2_METADATA_DISABLED: true
