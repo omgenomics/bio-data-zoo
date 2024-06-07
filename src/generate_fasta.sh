@@ -18,7 +18,7 @@ DIR_BASIC="$DIR_OUT/basic_dna.fa"
 log "Creating compressed FASTA file"
 cp "$DIR_BASIC" "$DIR_OUT/compressed.fa"
 bgzip -f "$DIR_OUT/compressed.fa"
-validate "$(diff "$DIR_BASIC" <(gunzip -c "$DIR_OUT/compressed.fa") && echo "ok")"
+validate "$(diff "$DIR_BASIC" <(gunzip -c "$DIR_OUT/compressed.fa.gz") && echo "ok")"
 
 # ------------------------------------------------------------------------------
 # Multiline FASTA

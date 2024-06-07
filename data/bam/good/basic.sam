@@ -99,7 +99,7 @@
 @PG	ID:bam_mark_duplicates	PN:picard	PP:bam_merge	VN:1.53	CL:java $jvm_args -jar MarkDuplicates.jar INPUT=$bam_file OUTPUT=$markdup_bam_file ASSUME_SORTED=TRUE METRICS_FILE=/dev/null VALIDATION_STRINGENCY=SILENT
 @PG	ID:bam_merge.1	PN:picard	PP:bam_mark_duplicates	VN:1.53	CL:java $jvm_args -jar MergeSamFiles.jar INPUT=$bam_file(s) OUTPUT=$merged_bam VALIDATION_STRINGENCY=SILENT
 @PG	ID:samtools	PN:samtools	PP:bam_merge.1	VN:1.19.2	CL:samtools view -b -h https://42basepairs.com/download/s3/1000genomes/phase3/data/NA12878/alignment/NA12878.chrom11.ILLUMINA.bwa.CEU.low_coverage.20121211.bam 11:82365011-82366010
-@PG	ID:samtools.1	PN:samtools	PP:samtools	VN:1.19.2	CL:samtools view -h ./src/../data/bam/good/basic.bam
+@PG	ID:samtools.1	PN:samtools	PP:samtools	VN:1.19.2	CL:samtools view -h ./data/bam/good/basic.bam
 @CO	$known_indels_file(s) = ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_mapping_resources/ALL.wgs.indels_mills_devine_hg19_leftAligned_collapsed_double_hit.indels.sites.vcf.gz
 @CO	$known_indels_file(s) .= ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_mapping_resources/ALL.wgs.low_coverage_vqsr.20101123.indels.sites.vcf.gz
 @CO	$known_sites_file(s) = ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_mapping_resources/ALL.wgs.dbsnp.build135.snps.sites.vcf.gz

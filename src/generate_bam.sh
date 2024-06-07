@@ -14,10 +14,6 @@ DIR_BASIC="$DIR_OUT/basic.bam"
 # SAM files
 # ------------------------------------------------------------------------------
 
-log "Creating valid SAM file"
-samtools view -h "$DIR_BASIC" > "$DIR_OUT/basic.sam"
-validate "ok"
-
 log "Creating compressed SAM files (bgzip)"
 cp "$DIR_OUT/basic.sam" "$DIR_OUT/compressed.sam"
 bgzip -f "$DIR_OUT/compressed.sam"

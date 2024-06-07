@@ -18,7 +18,7 @@ DIR_BASIC_R2="$DIR_OUT/basic_R2.fastq"
 log "Creating compressed FASTQ file"
 cp "$DIR_BASIC_R1" "$DIR_OUT/compressed.fastq"
 bgzip -f "$DIR_OUT/compressed.fastq"
-validate "$(diff "$DIR_BASIC_R1" <(gunzip -c "$DIR_OUT/compressed.fastq") && echo "ok")"
+validate "$(diff "$DIR_BASIC_R1" <(gunzip -c "$DIR_OUT/compressed.fastq.gz") && echo "ok")"
 
 # ------------------------------------------------------------------------------
 # Quality line starts with "@", which can trip up FASTQ parsers
