@@ -4,7 +4,7 @@ This repo contains example data in various genomics file formats. It is intended
 
 ## Browse
 
-**TODO**
+You can browse the data at https://42basepairs.com/browse/r2/bio-data-zoo
 
 ## Formats included
 
@@ -15,8 +15,8 @@ This repo contains example data in various genomics file formats. It is intended
 |BAM|.bam, .bam.bai, .bam.csi, .sam, .sam.gz, .sam.gz.csi, .sam.gz.tbi|
 |VCF|.vcf, .vcf.gz, .vcf.gz.csi, .vcf.gz.tbi, .bcf, .bcf.csi|
 |BED|.bed, .bed.gz, .bed.gz.csi, .bed.gz.tbi|
-|CRAM|**TODO**|
-|GFF|**TODO**|
+|CRAM|**TODO**: .cram, .crai, different CRAM versions|
+|GFF|**TODO**: .gff3, .gtf, .gff, .gff.gz, .gff.gz.tbi|
 
 
 ## Data Source
