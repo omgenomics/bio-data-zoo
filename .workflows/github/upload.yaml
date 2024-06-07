@@ -1,0 +1,21 @@
+name: uploadToS3
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ENDPOINT_URL: ${{ secrets.AWS_ENDPOINT_URL }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    # Doesn't seem to support sync on .gz/.bcf/.bam files (always deletes and reuploads them)
+    - name: Upload
+      run: aws s3 sync --delete ./data/ s3://bio-data-zoo/
