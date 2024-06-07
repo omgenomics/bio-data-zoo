@@ -1,7 +1,10 @@
 name: Upload data to bucket
+
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - data/**
   workflow_dispatch:
 
 jobs:

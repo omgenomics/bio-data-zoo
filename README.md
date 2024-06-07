@@ -32,21 +32,4 @@ This repo contains example data in various genomics file formats. It is intended
 
 ## Contributing
 
-**TODO**
-
-## Dev (skip this section if only using the data)
-
-### Prerequisites to develop on this repo:
-
-* `samtools`
-* `bedtools`
-* `bcftools`
-* `tabix`
-* `bgzip`
-* `seqtk`
-* `gshuf` (`brew install coreutils` on Mac)
-* `zcat`
-
-### File names
-
-Basic example files are called `basic*`, and files derived from it must not have a file name that start with that pattern.
+See [CONTRIBUTING docs](./CONTRIBUTING.md).
