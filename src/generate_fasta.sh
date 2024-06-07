@@ -8,51 +8,7 @@ source "$DIR_SRC/lib.sh" || exit
 # ==============================================================================
 
 DIR_OUT=$DIR_SRC/../data/fasta/good
-mkdir -p "$DIR_OUT"
-
-# ------------------------------------------------------------------------------
-# Basic
-# ------------------------------------------------------------------------------
-
-log "Creating valid FASTA file"
-DIR_BASIC="$DIR_OUT/basic.fa"
-cat > "$DIR_BASIC" <<EOF
->sequence1
-TTAACTCTTGCTGTCCCNNNNNCAGCAGAGGCGCCAATCATAGTTTTAAGAGAAGGAGGAAGGGACTGAGTGAGGGGAGAGTGGATGAGTAATTAGGTGG
->sequence2
-CAAGTGCAGTTGCCTGGATTTTGCATTGCAAGATTCCCAGGGTGTACTTTTCACATGCATTACAACGTGAATGATCTGCCCTACCATGGTTGTGTAGTAT
->sequence3
-CCAGGGGCACCCATGCTGGACCAGGCTGCACGGCCAGGGCTGCTGGGACAGAGGTAGGTGGGGTCCTGGAGCAGAGCCAGCTCCACACGCCAATAGCCCA
-EOF
-validate "ok"
-
-# ------------------------------------------------------------------------------
-# Basic (protein)
-# ------------------------------------------------------------------------------
-
-log "Creating valid FASTA file (protein)"
-cat > "$DIR_OUT/protein.fa" <<EOF
->sequence1
-LYLIFGAWAGMVGTALSLLIRAELGQPGTLLGDDQIYNVIVTAHAFVMIFFMVMPIMIGGFGNWLVPLMI
->sequence2
-GAPDMAFPRMNNMSFWLLPPSFLLLLASSTVEAGAGTGWTVYPPLAGNLAHAGASVDLAIFSLHLAGVSS
->sequence3
-ILGAINFITTAINMKPPTLSQYQTPLFVWSVLITAVLLLLSLPVLAAGITMLLTDRNLNTTFFDPAGGGD
-EOF
-validate "ok"
-
-# ------------------------------------------------------------------------------
-# Basic (aligned)
-# ------------------------------------------------------------------------------
-
-log "Creating aligned FASTA file (- for gaps)"
-cat > "$DIR_OUT/aligned.fa" <<EOF
->sequence1
-ATCTACGATCGAGCTACT
->sequence2
-ATC----ATCGACCCACT
-EOF
-validate "ok"
+DIR_BASIC="$DIR_OUT/basic_dna.fa"
 
 # ------------------------------------------------------------------------------
 # Compressed. Use bgzip because gzip adds timestamp in file, which makes git show
@@ -62,14 +18,14 @@ validate "ok"
 log "Creating compressed FASTA file"
 cp "$DIR_BASIC" "$DIR_OUT/compressed.fa"
 bgzip -f "$DIR_OUT/compressed.fa"
-validate "ok"
+validate "$(diff "$DIR_BASIC" <(gunzip -c "$DIR_OUT/compressed.fa") && echo "ok")"
 
 # ------------------------------------------------------------------------------
 # Multiline FASTA
 # ------------------------------------------------------------------------------
 
 log "Creating FASTA split across multiple lines"
-seqtk seq -l 60 "$DIR_BASIC" > "$DIR_OUT/multiline.fa"
+seqtk seq -l 20 "$DIR_BASIC" > "$DIR_OUT/multiline.fa"
 validate "$(diff <(wc -l < "$DIR_OUT/multiline.fa") <(wc -l < "$DIR_BASIC"))"
 
 # ------------------------------------------------------------------------------

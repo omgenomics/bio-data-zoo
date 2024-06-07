@@ -7,18 +7,8 @@ source "$DIR_SRC/lib.sh" || exit
 # Good BAM files
 # ==============================================================================
 
-URL="https://42basepairs.com/download/r2/genomics-data/alignments_NA12878.bam"
 DIR_OUT=$DIR_SRC/../data/bam/good
-mkdir -p "$DIR_OUT"
-
-# ------------------------------------------------------------------------------
-# Basic
-# ------------------------------------------------------------------------------
-
-log "Creating valid BAM file"
 DIR_BASIC="$DIR_OUT/basic.bam"
-samtools view -b -h "$URL" 11:82365011-82366010 > "$DIR_BASIC"
-validate "$(samtools quickcheck -vvv "$DIR_BASIC" 2>&1 | grep "good EOF block")"
 
 # ------------------------------------------------------------------------------
 # SAM files
@@ -50,14 +40,6 @@ cp "$DIR_BASIC" "$DIR_OUT/indexed_csi.bam"
 samtools index --bai "$DIR_OUT/indexed_bai.bam"
 samtools index --csi "$DIR_OUT/indexed_csi.bam"
 validate "ok"
-
-# ------------------------------------------------------------------------------
-# Unsorted
-# ------------------------------------------------------------------------------
-
-log "Creating unsorted BAM file"
-samtools view -b -h "$URL" 11:128989445-128990444 11:82365011-82366010 > "$DIR_OUT/unsorted.bam"
-validate "$(samtools index "$DIR_OUT/unsorted.bam" 2>&1 | grep "Unsorted positions on sequence")"
 
 # ------------------------------------------------------------------------------
 # No mapping information

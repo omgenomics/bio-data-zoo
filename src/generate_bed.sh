@@ -7,26 +7,15 @@ source "$DIR_SRC/lib.sh" || exit
 # Good BED files
 # ==============================================================================
 
-URL="https://42basepairs.com/download/r2/genomics-data/regions_CHM13.bed.gz"
 DIR_OUT=$DIR_SRC/../data/bed/good
-mkdir -p "$DIR_OUT"
-
-# ------------------------------------------------------------------------------
-# Basic
-# ------------------------------------------------------------------------------
-
-log "Creating valid BED file"
 DIR_BASIC="$DIR_OUT/basic.bed"
-curl -s "$URL" | zcat | head -n 10 > "$DIR_BASIC"
-validate "ok"
 
 # ------------------------------------------------------------------------------
 # Unsorted intervals
 # ------------------------------------------------------------------------------
 
 log "Creating unsorted BED file"
-curl -s "$URL" | zcat | head -n 50 | tail -n 10 > "$DIR_OUT/unsorted.bed"
-cat "$DIR_BASIC" >> "$DIR_OUT/unsorted.bed"
+shuf --random-source=<(echo 42) "$DIR_BASIC" > "$DIR_OUT/unsorted.bed"
 validate "$(diff "$DIR_OUT/unsorted.bed" <(bedtools sort -i "$DIR_OUT/unsorted.bed"))"
 
 # ------------------------------------------------------------------------------
@@ -39,7 +28,7 @@ validate "$(diff "$DIR_OUT/unsorted.bed" <(bedtools sort -i "$DIR_OUT/unsorted.b
 log "Creating compressed BED file (bgzip)"
 cp "$DIR_BASIC" "$DIR_OUT/compressed.bed"
 bgzip -f "$DIR_OUT/compressed.bed"
-validate "ok"
+validate "$(diff "$DIR_BASIC" <(gunzip -c "$DIR_OUT/compressed.bed") && echo "ok")"
 
 log "Creating indexed BED.bgz file (TBI, CSI)"
 cp "$DIR_BASIC" "$DIR_OUT/indexed_tbi.bed"
