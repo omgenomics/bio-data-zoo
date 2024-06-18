@@ -1,0 +1,50 @@
+bucket_id,name,prefix,path,value
+
+BUCKET_ID,42bp_link_github,,,https://github.com/omgenomics/bio-data-zoo
+
+BUCKET_ID,42bp_tooltip,bam/bad,truncated.bam,BAM file is truncated
+BUCKET_ID,42bp_tooltip,bam/bad,bai_older_than_data.bam,BAM is older than index by 1s (often a data transfer timing issue)
+
+BUCKET_ID,42bp_tooltip,bam/good,basic_unsorted.bam,BAM file is not sorted by mapping position
+BUCKET_ID,42bp_tooltip,bam/good,compressed.sam.gz,SAM file compressed with bgzip
+BUCKET_ID,42bp_tooltip,bam/good,indexed_bai.bam,BAM file with BAI index
+BUCKET_ID,42bp_tooltip,bam/good,indexed_csi.bam,BAM file with CSI index
+BUCKET_ID,42bp_tooltip,bam/good,indexed_csi.sam.gz,SAM file with CSI index
+BUCKET_ID,42bp_tooltip,bam/good,indexed_tbi.sam.gz,SAM file with TBI index
+BUCKET_ID,42bp_tooltip,bam/good,no_mapped_reads.bam,BAM file with no mapping information
+
+BUCKET_ID,42bp_tooltip,bed/bad,spaces.bed,BED file with spaces instead of tabs
+BUCKET_ID,42bp_tooltip,bed/bad,negative_coords.bed,BED file with negative coordinates
+BUCKET_ID,42bp_tooltip,bed/bad,start_greater_than_end_coords.bed,BED file with invalid range where start > end
+BUCKET_ID,42bp_tooltip,bed/bad,non_integer_coords.bed,BED file with floating point coordinates instead of integers
+
+BUCKET_ID,42bp_tooltip,bed/good,compressed.bed.gz,BED file compressed with bgzip
+BUCKET_ID,42bp_tooltip,bed/good,indexed_csi.bed.gz,BED file with CSI index
+BUCKET_ID,42bp_tooltip,bed/good,indexed_tbi.bed.gz,BED file with TBI index
+BUCKET_ID,42bp_tooltip,bed/good,unsorted.bed,BED file is not sorted by start position
+
+BUCKET_ID,42bp_tooltip,fasta/good,basic_aligned.fa,FASTA output by MSA tool
+BUCKET_ID,42bp_tooltip,fasta/good,compressed.fa.gz,FASTA compressed with bgzip
+BUCKET_ID,42bp_tooltip,fasta/good,duplicate_sequence_names.fa,FASTA with duplicate sequence names
+BUCKET_ID,42bp_tooltip,fasta/good,empty_lines.fa,FASTA with empty lines between sequences
+BUCKET_ID,42bp_tooltip,fasta/good,multiline.fa,FASTA with sequences split across multiple lines
+BUCKET_ID,42bp_tooltip,fasta/good,name_contains_spaces.fa,FASTA with spaces in sequence name
+
+BUCKET_ID,42bp_tooltip,fastq/bad,quality_mismatch.fastq,FASTQ where 2nd read has len(sequence) != len(quality)
+BUCKET_ID,42bp_tooltip,fastq/bad,truncated_clean.fastq,FASTQ where 3rd read is truncated right after the sequence
+BUCKET_ID,42bp_tooltip,fastq/bad,truncated_halfway.fastq,FASTQ where 2nd read is truncated half-way through the sequence
+
+BUCKET_ID,42bp_tooltip,fastq/good,compressed.fastq.gz,FASTQ compressed with bgzip
+BUCKET_ID,42bp_tooltip,fastq/good,duplicate_+.fastq,FASTQ where + line shows read name
+BUCKET_ID,42bp_tooltip,fastq/good,interleaved.fastq,FASTQ where R1/R2 are interleaved
+BUCKET_ID,42bp_tooltip,fastq/good,multiline.fastq,FASTQ file where sequence/quality are multi-line (please don't do this)
+BUCKET_ID,42bp_tooltip,fastq/good,quality_@.fastq,FASTQ file where quality starts with @ (trips up simple FASTQ parsers)
+
+BUCKET_ID,42bp_tooltip,vcf/bad,missing_info_field.vcf,VCF uses field "AN" which is not defined in the header
+
+BUCKET_ID,42bp_tooltip,vcf/good,basic_multisample.bcf,BCF with 1200+ samples
+BUCKET_ID,42bp_tooltip,vcf/good,basic_multisample.vcf,VCF with 1200+ samples
+BUCKET_ID,42bp_tooltip,vcf/good,compressed.vcf.gz,VCF compressed with bgzip
+BUCKET_ID,42bp_tooltip,vcf/good,indexed.bcf,BCF indexed with CSI (TBI not supported for BCF)
+BUCKET_ID,42bp_tooltip,vcf/good,indexed_csi.vcf.gz,VCF indexed with CSI
+BUCKET_ID,42bp_tooltip,vcf/good,indexed_tbi.vcf.gz,VCF indexed with TBI
