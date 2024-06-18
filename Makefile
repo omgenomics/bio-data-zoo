@@ -12,7 +12,7 @@ clean:
 	@rm -r ./data
 
 generate:
-	@find ./data -type f ! -name 'basic*' -exec rm {} \;
+	@find ./data -type f ! -name 'basic*' ! -name README.md -exec rm {} \;
 	@./src/generate_fasta.sh && \
 		./src/generate_fastq.sh && \
 		./src/generate_bam.sh && \
