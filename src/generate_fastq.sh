@@ -70,7 +70,7 @@ head -n 10 "$DIR_BASIC_R1" > "$DIR_OUT/truncated_clean.fastq"
 validate "$(diff <(seqtk seq "$DIR_BASIC_R1" | wc -l) <(seqtk seq "$DIR_OUT/truncated_clean.fastq" | wc -l))"
 
 log "Creating truncated FASTQ (half-way through a line)"
-head -c 200 "$DIR_BASIC_R1" > "$DIR_OUT/truncated_halfway.fastq"
+head -c 220 "$DIR_BASIC_R1" > "$DIR_OUT/truncated_halfway.fastq"
 validate "$(diff <(seqtk seq "$DIR_BASIC_R1" | wc -l) <(seqtk seq "$DIR_OUT/truncated_halfway.fastq" | wc -l))"
 
 # ------------------------------------------------------------------------------
