@@ -4,7 +4,11 @@ This repo contains example data in various genomics file formats. It is intended
 
 ## Browse
 
-You can browse the data at https://42basepairs.com/browse/r2/bio-data-zoo
+Browse the data on 42basepairs: https://42basepairs.com/browse/r2/bio-data-zoo
+
+## Download
+
+Download this repo as a zip file: https://github.com/omgenomics/bio-data-zoo/archive/refs/heads/main.zip
 
 ## Formats included
 
