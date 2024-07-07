@@ -4,6 +4,7 @@ BUCKET_ID,42bp_link_github,,,https://github.com/omgenomics/bio-data-zoo
 
 BUCKET_ID,42bp_tooltip,bam/bad,truncated.bam,BAM file is truncated
 BUCKET_ID,42bp_tooltip,bam/bad,bai_older_than_data.bam,BAM is older than index by 1s (often a data transfer timing issue)
+BUCKET_ID,42bp_tooltip,bam/bad,read_name_longer_than_254.sam,SAM file stores a read name longer than 254 character
 
 BUCKET_ID,42bp_tooltip,bam/good,basic_unsorted.bam,BAM file is not sorted by mapping position
 BUCKET_ID,42bp_tooltip,bam/good,compressed.sam.gz,SAM file compressed with bgzip

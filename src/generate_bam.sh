@@ -71,3 +71,21 @@ samtools index "$DIR_OUT/bai_older_than_data.bam"
 sleep 1  # wait before run touch to make sure the timestamp is different enough
 touch "$DIR_OUT/bai_older_than_data.bam"
 validate "$(samtools idxstats "$DIR_OUT/bai_older_than_data.bam" 2>&1 | grep "The index file is older than the data file")"
+
+# ------------------------------------------------------------------------------
+# Read name > 254 characters (https://github.com/samtools/samtools/issues/1081)
+# ------------------------------------------------------------------------------
+
+log "Creating SAM file where a read name is > 254 characters"
+awk -v OFS='\t' 'BEGIN {
+    filler = "";
+    for(i = 0; i < 255; i++) {
+        filler=filler"A"
+    }
+} {
+    if($0 !~ /^@/) { 
+        $1 = $1 filler;
+    }
+    print
+}' "${DIR_BASIC/.bam/.sam}" > "$DIR_OUT/read_name_longer_than_254.sam"
+validate "$(samtools view "$DIR_OUT/read_name_longer_than_254.sam" 2>&1 | grep "query name too long")"
